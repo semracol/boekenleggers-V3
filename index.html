@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Boekenleggers.be — Runway Collectie</title>
+<meta name="description" content="75 handgemaakte boekenleggers. Tussen de pagina's schuilt een kleine wereld. Levering in België en Nederland.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1EA; --sand:#D9C7A2; --bronze:#A67C52; --earth:#4B3621; --ink:#1D1D1D; --gold:#C9A46A;
+  --serif:"Cormorant Garamond",Georgia,serif; --sans:"Jost",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit}
+.label{font-family:var(--sans);font-size:11px;letter-spacing:.32em;text-transform:uppercase;font-weight:400}
+
+/* header */
+header{position:fixed;inset:0 0 auto 0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(16px,4vw,48px);transition:background .4s,color .4s}
+header.solid{background:rgba(245,241,234,.86);backdrop-filter:blur(10px)}
+header.dark{color:var(--paper)}
+header.dark.solid{background:rgba(29,29,29,.7)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{width:38px;height:38px;border-radius:50%;object-fit:cover;mix-blend-mode:multiply}
+header.dark .brand img{mix-blend-mode:normal}
+.brand span{font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:.01em}
+nav{display:flex;gap:clamp(16px,3vw,36px)}
+nav a{text-decoration:none;opacity:.75;transition:opacity .2s}
+nav a:hover{opacity:1}
+
+/* hero */
+.hero{min-height:100svh;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:4vw;padding:110px clamp(16px,6vw,96px) 60px;position:relative}
+.hero .label{color:var(--bronze);margin-bottom:28px;display:block}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,7.2vw,112px);line-height:.96;letter-spacing:-.015em;color:var(--earth)}
+.hero h1 em{font-style:italic;color:var(--bronze)}
+.hero p{margin-top:32px;max-width:440px;font-size:17px;line-height:1.65;color:#5b4a3a}
+.hero .cta{margin-top:40px;display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:var(--earth)}
+.hero .cta i{width:56px;height:1px;background:var(--earth);transition:width .4s}
+.hero .cta:hover i{width:90px}
+.fan{position:relative;height:min(78vh,680px)}
+.fan img{position:absolute;left:50%;top:50%;height:86%;width:auto;transform-origin:50% 95%;filter:drop-shadow(0 24px 30px rgba(75,54,33,.18));transition:transform 1.2s cubic-bezier(.2,.7,.1,1)}
+.scrollhint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);color:var(--bronze)}
+
+/* runway */
+.runway{position:relative;height:100svh;min-height:620px;background:radial-gradient(120% 90% at 50% 40%,#2a2119 0%,#1D1D1D 55%,#121110 100%);color:var(--paper);overflow:hidden;user-select:none;touch-action:pan-y}
+.runway-head{position:absolute;top:96px;left:clamp(16px,5vw,64px);right:clamp(16px,5vw,64px);display:flex;justify-content:space-between;align-items:flex-end;z-index:5;pointer-events:none}
+.runway-head h2{font-family:var(--serif);font-weight:300;font-size:clamp(30px,4vw,54px);line-height:1}
+.runway-head h2 em{color:var(--gold);font-style:italic}
+.runway-head .label{color:var(--sand);opacity:.7}
+.rail{position:absolute;left:0;top:0;width:200%;height:100%;opacity:.5;pointer-events:none}
+.rail path{fill:none;stroke:var(--gold);stroke-width:1.4}
+.stage{position:absolute;inset:0;cursor:grab;perspective:1400px}
+.stage.grab{cursor:grabbing}
+.bm{position:absolute;left:50%;top:52%;will-change:transform,opacity,filter}
+.bm img{height:100%;width:auto;pointer-events:none;filter:drop-shadow(0 34px 40px rgba(0,0,0,.55))}
+.caption{position:absolute;left:0;right:0;bottom:92px;text-align:center;z-index:5;pointer-events:none}
+.caption .code{font-family:var(--serif);font-size:clamp(26px,3vw,38px);font-weight:300;letter-spacing:.04em}
+.caption .meta{margin-top:8px;color:var(--sand);opacity:.75}
+.caption .open{pointer-events:auto;margin-top:14px;background:none;border:1px solid rgba(201,164,106,.45);color:var(--gold);border-radius:999px;padding:9px 22px;cursor:pointer}
+.caption .open:hover{background:rgba(201,164,106,.12)}
+.controls{position:absolute;left:clamp(16px,5vw,64px);right:clamp(16px,5vw,64px);bottom:28px;display:flex;justify-content:space-between;align-items:center;z-index:6}
+.count{font-family:var(--serif);font-size:20px;color:var(--sand)}
+.count b{font-weight:400;color:var(--paper)}
+.arrows{display:flex;gap:10px}
+.arrows button{width:46px;height:46px;border-radius:50%;border:1px solid rgba(245,241,234,.25);background:transparent;color:var(--paper);font-size:18px;cursor:pointer;transition:border-color .2s}
+.arrows button:hover{border-color:var(--gold)}
+.hint{color:var(--sand);opacity:.55}
+.progress{position:absolute;left:0;bottom:0;height:2px;background:var(--gold);z-index:6;transition:width .3s}
+
+/* collections index */
+.index{padding:clamp(80px,12vw,160px) clamp(16px,6vw,96px)}
+.index-top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:56px;flex-wrap:wrap}
+.index h2,.story h2{font-family:var(--serif);font-weight:300;font-size:clamp(38px,5.4vw,76px);line-height:1;color:var(--earth)}
+.index h2 em,.story h2 em{font-style:italic;color:var(--bronze)}
+.index-top p{max-width:360px;line-height:1.6;color:#5b4a3a}
+.series{list-style:none;border-top:1px solid var(--sand)}
+.series li{border-bottom:1px solid var(--sand)}
+.series button{width:100%;display:grid;grid-template-columns:70px 1fr auto 180px;align-items:center;gap:20px;padding:22px 0;background:none;border:0;text-align:left;cursor:pointer;color:var(--earth);font:inherit}
+.series .no{font-family:var(--serif);font-size:18px;color:var(--bronze)}
+.series .nm{font-family:var(--serif);font-size:clamp(28px,3.4vw,46px);font-weight:300;transition:transform .4s,color .3s}
+.series .ct{color:var(--bronze)}
+.series .peek{display:flex;justify-content:flex-end;gap:6px;height:64px}
+.series .peek img{height:100%;width:auto;opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
+.series button:hover .nm{transform:translateX(14px);color:var(--bronze)}
+.series button:hover .peek img{opacity:1;transform:none}
+.series button:hover .peek img:nth-child(2){transition-delay:.05s}
+.series button:hover .peek img:nth-child(3){transition-delay:.1s}
+
+/* story */
+.story{background:#EDE6DA;padding:clamp(80px,12vw,160px) clamp(16px,6vw,96px);display:grid;grid-template-columns:.9fr 1.1fr;gap:6vw;align-items:start}
+.story .lead{margin-top:28px;font-family:var(--serif);font-size:clamp(22px,2vw,28px);line-height:1.4;color:var(--earth);font-weight:300;max-width:520px}
+.steps{list-style:none;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:64px 1fr;gap:16px;padding:28px 0;border-bottom:1px solid var(--sand)}
+.steps li:first-child{border-top:1px solid var(--sand)}
+.steps li::before{content:"0" counter(s);font-family:var(--serif);font-size:22px;color:var(--bronze)}
+.steps h3{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--earth)}
+.steps p{margin-top:6px;line-height:1.6;color:#5b4a3a}
+.quote{grid-column:1/-1;margin-top:60px;text-align:center;font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(28px,3.6vw,50px);color:var(--earth)}
+
+/* footer */
+footer{background:var(--ink);color:var(--paper);padding:72px clamp(16px,6vw,96px) 40px}
+.foot{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.foot h4{font-family:var(--serif);font-weight:300;font-size:clamp(32px,4vw,52px)}
+.foot ul{list-style:none;line-height:2;color:var(--sand)}
+.foot a{text-decoration:none;border-bottom:1px solid rgba(217,199,162,.35)}
+.legal{margin-top:64px;display:flex;justify-content:space-between;color:rgba(245,241,234,.4);flex-wrap:wrap;gap:12px}
+
+/* detail panel */
+.veil{position:fixed;inset:0;background:rgba(18,17,16,.55);opacity:0;pointer-events:none;transition:opacity .4s;z-index:80}
+.panel{position:fixed;top:0;right:0;height:100%;width:min(920px,100%);background:var(--paper);z-index:90;transform:translateX(100%);transition:transform .6s cubic-bezier(.2,.8,.1,1);display:grid;grid-template-columns:1fr 1fr;overflow:auto}
+.open-panel .veil{opacity:1;pointer-events:auto}
+.open-panel .panel{transform:none}
+.panel .pic{background:#EDE6DA;display:flex;align-items:center;justify-content:center;padding:48px;min-height:100%}
+.panel .pic img{max-height:84vh;width:auto;filter:drop-shadow(0 26px 30px rgba(75,54,33,.25))}
+.panel .info{padding:72px 48px 48px;display:flex;flex-direction:column;gap:22px}
+.panel .label{color:var(--bronze)}
+.panel h3{font-family:var(--serif);font-weight:300;font-size:48px;line-height:1;color:var(--earth)}
+.panel .txt{font-family:var(--serif);font-size:21px;line-height:1.5;color:#5b4a3a}
+.panel dl{display:grid;grid-template-columns:auto 1fr;gap:12px 24px;border-top:1px solid var(--sand);padding-top:22px;font-size:15px}
+.panel dt{color:var(--bronze)}
+.panel .ask{margin-top:auto;display:inline-flex;justify-content:center;padding:16px 24px;background:var(--earth);color:var(--paper);text-decoration:none;border-radius:999px;letter-spacing:.08em}
+.panel .ask:hover{background:var(--ink)}
+.panel .close{position:absolute;top:18px;right:18px;width:44px;height:44px;border-radius:50%;border:1px solid var(--sand);background:var(--paper);cursor:pointer;font-size:18px;color:var(--earth)}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s,transform 1s cubic-bezier(.2,.7,.1,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  nav a:not(:last-child){display:none}
+  .hero{grid-template-columns:1fr;padding-top:100px}
+  .fan{height:52vh;order:-1}
+  .story{grid-template-columns:1fr}
+  .series button{grid-template-columns:44px 1fr auto}
+  .series .peek{display:none}
+  .panel{grid-template-columns:1fr}
+  .panel .pic{min-height:auto;padding:64px 24px 24px}
+  .panel .pic img{max-height:56vh}
+  .panel .info{padding:24px 24px 40px}
+  .hint{display:none}
+  .runway-head{top:84px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <a class="brand" href="#top"><img src="assets/logo.png" alt=""><span>Boekenleggers.be</span></a>
+  <nav class="label">
+    <a href="#runway">Collectie</a><a href="#series">Thema's</a><a href="#verhaal">Verhaal</a><a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <span class="label">Runway Collectie · <span class="total"></span> boekenleggers</span>
+    <h1>Tussen de pagina's schuilt een <em>kleine wereld.</em></h1>
+    <p>Handgemaakte boekenleggers, één voor één afgewerkt. Een klein cadeau voor wie graag leest, of voor jezelf.</p>
+    <a class="cta label" href="#runway"><i></i>Bekijk de collectie</a>
+  </div>
+  <div class="fan" id="fan"></div>
+  <span class="scrollhint label">Scroll</span>
+</section>
+
+<section class="runway" id="runway" aria-label="Collectie">
+  <svg class="rail" id="rail" viewBox="0 0 2400 900" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M-30 520 C200 300, 500 780, 1000 520 S1800 250, 2430 520"/>
+    <path d="M-30 560 C220 360, 520 820, 1000 560 S1820 300, 2430 560" opacity=".35"/>
+  </svg>
+  <div class="runway-head">
+    <h2>De <em>runway</em></h2>
+    <span class="label hint">Sleep · swipe · pijltjestoetsen</span>
+  </div>
+  <div class="stage" id="stage"></div>
+  <div class="caption">
+    <div class="code" id="capCode"></div>
+    <div class="meta label" id="capMeta"></div>
+    <button class="open label" id="capOpen">Bekijk van dichtbij</button>
+  </div>
+  <div class="controls">
+    <div class="count" id="count"></div>
+    <div class="arrows"><button id="prev" aria-label="Vorige">←</button><button id="next" aria-label="Volgende">→</button></div>
+  </div>
+  <div class="progress" id="progress"></div>
+</section>
+
+<section class="index" id="series">
+  <div class="index-top reveal">
+    <h2>Zeven <em>thema's</em></h2>
+    <p>Kies een thema en de runway springt er meteen naartoe.</p>
+  </div>
+  <ul class="series" id="seriesList"></ul>
+</section>
+
+<section class="story" id="verhaal">
+  <div class="reveal">
+    <span class="label" style="color:var(--bronze)">Het verhaal</span>
+    <h2 style="margin-top:24px">Met de hand <em>gemaakt,</em> in Antwerpen.</h2>
+    <p class="lead">Elke boekenlegger gaat door dezelfde handen. Geen fabriek, geen voorraad van duizenden stuks: een kleine collectie, met zorg afgewerkt.</p>
+  </div>
+  <ol class="steps reveal">
+    <li><div><h3>Geprint</h3><p>Elk ontwerp wordt op stevig karton gedrukt.</p></div></li>
+    <li><div><h3>Gelamineerd</h3><p>Helder, holografisch of met glitter, zodat hij jaren meegaat.</p></div></li>
+    <li><div><h3>Gesneden</h3><p>Op maat gesneden tot ongeveer 15 × 4 cm.</p></div></li>
+    <li><div><h3>Afgewerkt</h3><p>Geponst en, als je wilt, met een kwastje.</p></div></li>
+  </ol>
+  <p class="quote reveal">Elke bladzijde verdient een mooi plekje.</p>
+</section>
+
+<footer id="contact">
+  <div class="foot">
+    <h4>Een kleine wereld<br>voor iemand bijzonder.</h4>
+    <ul class="label">
+      <li><a href="https://www.instagram.com/boekenleggers.be/" target="_blank" rel="noopener">Instagram · @boekenleggers.be</a></li>
+      <li>Levering in België &amp; Nederland</li>
+      <li>Gratis verzending vanaf 5 stuks</li>
+    </ul>
+  </div>
+  <div class="legal label"><span>© 2026 Boekenleggers.be</span><span>Handgemaakt in Antwerpen</span></div>
+</footer>
+
+<div class="veil" id="veil"></div>
+<aside class="panel" id="panel" aria-hidden="true">
+  <button class="close" id="close" aria-label="Sluiten">✕</button>
+  <div class="pic"><img id="pImg" alt=""></div>
+  <div class="info">
+    <span class="label" id="pSeries"></span>
+    <h3 id="pCode"></h3>
+    <p class="txt" id="pTxt"></p>
+    <dl>
+      <dt>Formaat</dt><dd>ca. 15 × 4 cm</dd>
+      <dt>Materiaal</dt><dd>Karton, gelamineerd</dd>
+      <dt>Afwerking</dt><dd id="pEdge"></dd>
+      <dt>Code</dt><dd id="pSku"></dd>
+    </dl>
+    <a class="ask" id="pAsk" href="https://www.instagram.com/boekenleggers.be/" target="_blank" rel="noopener">Vraag deze aan via Instagram</a>
+  </div>
+</aside>
+
+<script src="assets/data.js"></script>
+<script>
+(()=>{
+const SERIES={
+  FL:{nl:'Bloemen',txt:'Een vleugje tuin tussen je pagina\'s: bloesems, bladeren en zachte kleuren.'},
+  CT:{nl:'Katten',txt:'Voor wie leest met een kat op schoot, of er eentje mist.'},
+  AN:{nl:'Dieren',txt:'Kleine dieren die je bladzijde bewaken tot je terugkomt.'},
+  XM:{nl:'Winter & Kerst',txt:'Sneeuw, rendieren en warme lichtjes voor lange winteravonden.'},
+  CH:{nl:'Kinderwereld',txt:'Dromerige tekeningen voor jonge lezers en wie jong van hart blijft.'},
+  LS:{nl:'Landschappen',txt:'Een uitzicht om even in weg te dromen tussen twee hoofdstukken.'},
+  AB:{nl:'Abstract',txt:'Vormen en kleuren die met elk boek meegaan.'},
+  QT:{nl:'Citaten',txt:'Woorden om bij stil te staan.'}
+};
+const EDGE={C:'Helder',H:'Holografisch',G:'Glitter',S:'Sparkle',B:'Met rand'};
+const ORDER=['FL','CT','AN','CH','XM','LS','AB','QT'];
+const raw=window.BOOKMARKS||[];
+const items=raw.map(b=>{const p=b.code.split('-');return {...b,series:p[1],num:p[2],edge:p[3]||'C',src:'assets/bookmarks/'+b.code+'.webp',thumb:'assets/thumbs/'+b.code+'.webp'}})
+  .sort((a,b)=>ORDER.indexOf(a.series)-ORDER.indexOf(b.series)||a.num.localeCompare(b.num));
+const N=items.length;
+document.querySelectorAll('.total').forEach(e=>e.textContent=N);
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* hero fan */
+const fan=document.getElementById('fan');
+const heroPick=['FL','CT','XM','CH','AB'].map(s=>items.find(i=>i.series===s)).filter(Boolean);
+heroPick.forEach((it,k)=>{
+  const img=new Image();img.src=it.src;img.alt='';
+  const o=k-(heroPick.length-1)/2;
+  img.style.transform=`translate(-50%,-50%) rotate(0deg)`;
+  img.dataset.t=`translate(calc(-50% + ${o*16}%),-50%) rotate(${o*9}deg)`;
+  img.style.zIndex=10-Math.abs(o);
+  fan.appendChild(img);
+});
+requestAnimationFrame(()=>setTimeout(()=>fan.querySelectorAll('img').forEach(i=>i.style.transform=i.dataset.t),200));
+
+/* runway */
+const stage=document.getElementById('stage'),rail=document.getElementById('rail');
+const els=items.map(it=>{const d=document.createElement('div');d.className='bm';const im=new Image();im.loading='lazy';im.decoding='async';im.src=it.src;im.alt=SERIES[it.series]?.nl+' boekenlegger '+it.code;d.appendChild(im);stage.appendChild(d);return d});
+let pos=0,target=0,last=-1,vw=innerWidth,vh=innerHeight;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function dims(){vw=innerWidth;vh=stage.clientHeight;}
+function layout(){
+  const H=Math.min(vh*.56,580), sp=vw<700?vw*.34:Math.min(230,vw*.15);
+  for(let i=0;i<N;i++){
+    const o=i-pos,a=Math.abs(o),el=els[i];
+    if(a>9){if(el.style.display!=='none')el.style.display='none';continue}
+    el.style.display='';
+    const it=items[i],w=H*it.w/it.h;
+    el.style.height=H+'px';el.style.width=w+'px';
+    const x=o*sp*(1-a*.025), y=a*a*7-Math.cos(o*.6)*10;
+    const s=Math.max(.42,1-a*.1);
+    el.style.transform=`translate(${x-w/2}px,${y-H/2}px) rotateY(${clamp(o*-9,-40,40)}deg) rotate(${o*1.8}deg) scale(${s})`;
+    el.style.opacity=Math.max(0,1-a*.13);
+    el.style.filter=reduce?'':`blur(${Math.min(a*1.1,6)}px)`;
+    el.style.zIndex=100-Math.round(a*2);
+  }
+  rail.style.transform=`translateX(${-(pos/N)*50}%)`;
+}
+function caption(){
+  const i=clamp(Math.round(pos),0,N-1);if(i===last)return;last=i;
+  const it=items[i];
+  document.getElementById('capCode').textContent=it.code;
+  document.getElementById('capMeta').textContent=(SERIES[it.series]?.nl||it.series)+' · '+(EDGE[it.edge]||it.edge);
+  document.getElementById('count').innerHTML=`<b>${String(i+1).padStart(2,'0')}</b> / ${N}`;
+  document.getElementById('progress').style.width=((i+1)/N*100)+'%';
+}
+function tick(){
+  const d=target-pos;
+  if(Math.abs(d)>.0005){pos+=d*(reduce?1:.11);layout();caption()}
+  requestAnimationFrame(tick);
+}
+function go(i){target=clamp(i,0,N-1)}
+dims();layout();caption();tick();
+addEventListener('resize',()=>{dims();layout()});
+
+let drag=null;
+stage.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,t:target,moved:false,id:e.pointerId};stage.classList.add('grab')});
+addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x;if(Math.abs(dx)>6){drag.moved=true;if(!stage.hasPointerCapture(drag.id))stage.setPointerCapture(drag.id)}
+  const sp=vw<700?vw*.34:Math.min(230,vw*.15);target=clamp(drag.t-dx/sp,0,N-1)});
+addEventListener('pointerup',e=>{if(!drag)return;stage.classList.remove('grab');
+  if(!drag.moved){const el=e.target.closest('.bm');if(el){const i=els.indexOf(el);if(i===Math.round(pos))openPanel(i);else go(i)}}
+  else target=Math.round(target);drag=null});
+stage.addEventListener('wheel',e=>{if(Math.abs(e.deltaX)>Math.abs(e.deltaY)){e.preventDefault();target=clamp(target+e.deltaX/180,0,N-1);clearTimeout(stage._w);stage._w=setTimeout(()=>target=Math.round(target),140)}},{passive:false});
+document.getElementById('prev').onclick=()=>go(Math.round(target)-1);
+document.getElementById('next').onclick=()=>go(Math.round(target)+1);
+document.getElementById('capOpen').onclick=()=>openPanel(Math.round(pos));
+addEventListener('keydown',e=>{
+  if(e.key==='Escape')closePanel();
+  const r=document.getElementById('runway').getBoundingClientRect();
+  if(r.top<vh*.5&&r.bottom>vh*.5&&!document.body.classList.contains('open-panel')){
+    if(e.key==='ArrowRight'){go(Math.round(target)+1);e.preventDefault()}
+    if(e.key==='ArrowLeft'){go(Math.round(target)-1);e.preventDefault()}
+  }
+});
+
+/* series index */
+const list=document.getElementById('seriesList');
+ORDER.filter(s=>items.some(i=>i.series===s)).forEach((s,k)=>{
+  const its=items.filter(i=>i.series===s);
+  const li=document.createElement('li');
+  li.innerHTML=`<button><span class="no">0${k+1}</span><span class="nm">${SERIES[s].nl}</span><span class="ct label">${its.length} stuks</span><span class="peek">${its.slice(0,3).map(i=>`<img src="${i.thumb}" alt="" loading="lazy">`).join('')}</span></button>`;
+  li.querySelector('button').onclick=()=>{document.getElementById('runway').scrollIntoView({behavior:reduce?'auto':'smooth'});go(items.indexOf(its[0]))};
+  list.appendChild(li);
+});
+
+/* panel */
+function openPanel(i){
+  const it=items[i];
+  document.getElementById('pImg').src=it.src;
+  document.getElementById('pImg').alt=it.code;
+  document.getElementById('pSeries').textContent=SERIES[it.series]?.nl||it.series;
+  document.getElementById('pCode').textContent='Nr. '+it.num;
+  document.getElementById('pTxt').textContent=SERIES[it.series]?.txt||'';
+  document.getElementById('pEdge').textContent=EDGE[it.edge]||it.edge;
+  document.getElementById('pSku').textContent=it.code;
+  document.body.classList.add('open-panel');
+  document.getElementById('panel').setAttribute('aria-hidden','false');
+}
+function closePanel(){document.body.classList.remove('open-panel');document.getElementById('panel').setAttribute('aria-hidden','true')}
+document.getElementById('close').onclick=closePanel;
+document.getElementById('veil').onclick=closePanel;
+
+/* header + reveal */
+const hdr=document.getElementById('hdr'),rw=document.getElementById('runway'),ft=document.getElementById('contact');
+function onScroll(){
+  hdr.classList.toggle('solid',scrollY>40);
+  const inDark=[rw,ft].some(s=>{const r=s.getBoundingClientRect();return r.top<40&&r.bottom>40});
+  hdr.classList.toggle('dark',inDark);
+}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+})();
+</script>
+</body>
+</html>
